@@ -24,6 +24,16 @@ class UsersController < ApplicationController
     end
   end
 
+  
+
+  get '/login' do
+    erb :login
+  end
+
+  get '/signup' do
+    erb :signup
+  end
+
   get '/?' do
     erb :home
   end
