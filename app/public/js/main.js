@@ -21,9 +21,8 @@ function makeList() {
 		success: function(res) {
 			$("#saved-list").empty();
 			var array = JSON.parse("[" + res + "]");
-			console.log(array[0][1])
 			for (var i = array[0].length - 1; i >= 0; i--) {
-				$("#saved-list").append('<li>' + array[0][i].title + '</li>')
+				$("#saved-list").append('<li><p class="title-text">' + array[0][i].title + '<div class="movie-id" style="display:none;">' + array[0][i].id + '</div></p><button class="delete-button">Delete</button></li>')
 			}
 			
 		},
@@ -84,4 +83,48 @@ $("#addToList").click(function() {
 	})
 	makeList();
 })
+
+$("#logout").click(function() {
+	$.ajax({
+		url: '/movie/logout',
+		type: 'get',
+		success: function(res) {
+			console.log(res);
+			location.reload();
+		},
+		error: function(err) {
+			console.log('something went wrong')
+			console.log(err)
+		}
+	})
+})
+
+$(document).on('click', '.delete-button', function() {
+	
+	id2Delete = $(this).parent()[0].getElementsByClassName('movie-id')[0].innerText
+
+	$.ajax({
+		url: '/movie/delete',
+		type: 'delete',
+		data: {
+			"idToDelete": id2Delete
+		},
+		success: function() {
+			console.log("successfully deleted");
+		},
+		error: function(err) {
+			console.log('something went wrong')
+			console.log(err)
+		}
+	})
+  $(this).parent().remove()
+});
+
+
+
+
+
+
+
+
 
