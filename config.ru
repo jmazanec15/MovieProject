@@ -10,10 +10,13 @@ ActiveRecord::Base.establish_connection(
 
 require './app/models/user'
 require './app/models/movie'
+require './app/models/future'
 
 require './app/controllers/application_controller'
 require './app/controllers/users_controller'
 require './app/controllers/movies_controller'
+require './app/controllers/futures_controller'
 
 map('/movie') { run MoviesController }
+map('/future') { run FuturesController }
 map('/') { run UsersController }
