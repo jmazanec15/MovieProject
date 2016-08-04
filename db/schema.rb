@@ -23,13 +23,13 @@ ActiveRecord::Schema.define(version: 20160803164105) do
   end
 
   create_table "movies", force: :cascade do |t|
-    t.string "title"
-    t.string "plot"
-    t.string "img"
-    t.string "rating"
-    t.string "year"
-    t.string "actors"
-    t.string "user_id"
+    t.string  "title"
+    t.string  "plot"
+    t.string  "img"
+    t.integer "rating"
+    t.string  "year"
+    t.string  "actors"
+    t.string  "user_id"
   end
 
   create_table "users", force: :cascade do |t|
