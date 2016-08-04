@@ -7,30 +7,24 @@ var movieTitle = '',
 	movieActors   = '',
 	movieRated = '';
 
-
 function makeList() {
 	$.ajax({
 		url: '/movie',
 		type: 'get',
-		data: {
-			"title": movieTitle,
-			"img": movieImage,
-			"plot": moviePlot,
-			"year": movieYear,
-			"rating": movieRated,
-			"actors": movieActors
-		},
 		success: function(res) {
 			$("#saved-list").empty();
+
 			var array = JSON.parse("[" + res + "]");
-			for (var i = array[0].length - 1; i >= 0; i--) {
-				$("#saved-list").append('<li><p class="title-text">' + array[0][i].title + '<div class="movie-id" style="display:none;">' + array[0][i].id + '</div></p><div class="rating"><span class="stars" tabindex="1">☆</span><span class="stars" tabindex="2">☆</span><span class="stars" tabindex="3">☆</span><span class="stars" tabindex="4">☆</span><span class="stars" tabindex="5">☆</span></div><button class="delete-button">Delete</button></li>')
+			for (var i = 0; i <= array[0].length-1 ; i++) {
+				$("#saved-list").append('<li class="list-it"><p class="title-text">' + array[0][i].title + '<div class="movie-id" style="display:none;">' + array[0][i].id + '</div></p><div class="rating"><span class="stars" tabindex="1">☆</span><span class="stars" tabindex="2">☆</span><span class="stars" tabindex="3">☆</span><span class="stars" tabindex="4">☆</span><span class="stars" tabindex="5">☆</span></div><button class="delete-button">Delete</button></li>')
 				
+				currectItem = document.getElementsByClassName('list-it')[i];
+
 					for (var t = 0; t <= 4; t++) {
 	 					if (t<= parseInt(array[0][i].rating)-1) {
-	 						document.getElementsByClassName('stars')[t].style.color='gold';
+	 						currectItem.getElementsByClassName('stars')[t].style.color='gold';
 	 					} else {
-	 						document.getElementsByClassName('stars')[t].style.color='black';
+	 						currectItem.getElementsByClassName('stars')[t].style.color='black';
 	 				}
 				}
 			}
@@ -236,7 +230,9 @@ $(document).on('click', '.rating > span', function() {
 
 
 	 }
-id2Find = document.getElementsByClassName('movie-id')[0].innerText
+
+	 var id2Find = $(this).parent().parent()[0].getElementsByClassName('movie-id')[0].innerText;
+
 	$.ajax({
 		url: '/movie/patch',
 		type: 'patch',
@@ -252,7 +248,6 @@ id2Find = document.getElementsByClassName('movie-id')[0].innerText
 			console.log(err)
 		}
 	})
-	// .indexOf(this)
 });
 
 
