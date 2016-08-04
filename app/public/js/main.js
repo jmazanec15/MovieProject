@@ -67,6 +67,8 @@ makeList();
 $("#searchButton").click(function() {
 	$("#movie-title").empty()
 	$("#movie-image").empty()
+	$("#movie-review").empty()
+	$("#movie-plot").empty()
 	$.ajax({
 	url: 'http://www.omdbapi.com/?t=' + $("#searchBar")[0].value + '&y=&plot=full&r=json',
 	type: 'get',
@@ -107,13 +109,14 @@ $("#addToList").click(function() {
 		},
 		success: function(res) {
 			console.log(res)
+			makeList();
 		},
 		error: function(err) {
 			console.log('something went wrong')
 			console.log(err)
 		}
 	})
-	makeList();
+
 })
 
 $("#addToUpcoming").click(function() {
@@ -132,13 +135,14 @@ $("#addToUpcoming").click(function() {
 		},
 		success: function(res) {
 			console.log(res)
+				makeUpcomingList();
 		},
 		error: function(err) {
 			console.log('something went wrong')
 			console.log(err)
 		}
 	})
-	makeUpcomingList();
+
 })
 
 $("#logout").click(function() {
@@ -198,7 +202,8 @@ $(document).on('click', '.delete-upcoming-button', function() {
   $(this).parent().remove()
 });
 
-$(document).on('click', '#add-to-list-from-up', function() {
+$(document).on('click', '#add-to-list-from-up', function(e) {
+	e.preventDefault();
 	id2Find = $(this).parent()[0].getElementsByClassName('movie-id')[0].innerText
 	$.ajax({
 		url: '/future/move',
@@ -208,14 +213,15 @@ $(document).on('click', '#add-to-list-from-up', function() {
 		},
 		success: function(res) {
 			console.log(res)
+			makeUpcomingList();
+			makeList();
 		},
 		error: function(err) {
 			console.log('something went wrong')
 			console.log(err)
 		}
 	})
-	makeUpcomingList();
-	makeList();
+	
 });
 
 $(document).on('click', '.rating > span', function() {
