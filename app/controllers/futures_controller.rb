@@ -9,6 +9,7 @@ class FuturesController < ApplicationController
       { status: 'error', message: 'Cannot delete movie' }.to_json
     end
   end
+
   post '/move' do
     future = Future.find params['idToFind']
     movie = Movie.create title: future['title'], img: future['img'], plot: future['plot'], year: future['year'], rating: future['rating'], actors: future['actors'], user_id: session[:user_id]
@@ -23,6 +24,7 @@ class FuturesController < ApplicationController
 
 
   end
+
   post '/' do
     future = Future.create title: params['title'], img: params['img'], plot: params['plot'], year: params['year'], rating: params['rating'], actors: params['actors'], user_id: session[:user_id]
     futures = Future.all
@@ -30,6 +32,7 @@ class FuturesController < ApplicationController
 
 
   end
+  
   get '/?' do
     futures    = Future.all
     userid   = session[:user_id].to_s
@@ -37,7 +40,7 @@ class FuturesController < ApplicationController
      # p moviex.user_id + ' movie_id' 
      # p user_id + ' user_id'
    }
-
+   content_type :json
     newFutures.to_json
 
   end
